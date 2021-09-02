@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 默认单例bean 注册方法实现..
+ * 默认单例bean 注册方法实现..1
  *
  * @author wangyuwen
  * @version 1.0, 2021/8/30 23:10
