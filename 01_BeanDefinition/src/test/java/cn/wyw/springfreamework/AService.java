@@ -1,4 +1,4 @@
-package cn.wyw.springfreamework;
+package java.cn.wyw.springfreamework;
 
 /**
  * a service

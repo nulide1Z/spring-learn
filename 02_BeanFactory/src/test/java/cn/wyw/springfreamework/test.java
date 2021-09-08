@@ -1,7 +1,7 @@
 package cn.wyw.springfreamework;
 
 import cn.wyw.springfreamework.factory.config.BeanDefinition;
-import cn.wyw.springfreamework.factory.support.DefaultBeanListableBeanFactory;
+import cn.wyw.springfreamework.factory.support.DefaultListableBeanFactory;
 import org.junit.Test;
 
 /**
@@ -14,16 +14,16 @@ public class test {
 
      @Test
     public void testA(){
-         BeanDefinition beanDefinition = new BeanDefinition(aservice.class);
-         DefaultBeanListableBeanFactory defaultBeanListableBeanFactory = new DefaultBeanListableBeanFactory();
-         defaultBeanListableBeanFactory.registerBean("aservice", beanDefinition);
+         BeanDefinition beanDefinition = new BeanDefinition(cn.wyw.springfreamework.aservice.class);
+         DefaultListableBeanFactory defaultListableBeanFactory = new DefaultListableBeanFactory();
+         defaultListableBeanFactory.registerBean("aservice", beanDefinition);
 
          // 第一次获取bean
-         aservice aservice = (aservice)defaultBeanListableBeanFactory.getBean("aservice");
+         cn.wyw.springfreamework.aservice aservice = (cn.wyw.springfreamework.aservice) defaultListableBeanFactory.getBean("aservice");
          aservice.test();
 
          // 第二次获取bean
-         aservice bservice = (aservice)defaultBeanListableBeanFactory.getBean("aservice");
+         cn.wyw.springfreamework.aservice bservice = (cn.wyw.springfreamework.aservice) defaultListableBeanFactory.getBean("aservice");
          bservice.test();
 
      }

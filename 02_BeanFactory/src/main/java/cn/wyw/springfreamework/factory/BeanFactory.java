@@ -9,7 +9,12 @@ package cn.wyw.springfreamework.factory;
 public interface BeanFactory {
 
     /**
-     * 获取bean
+     * 定义获取bean方法
+     *
+     * @param name 名称
+     * @return  bean
+     * @author wangyuwen
+     * @date 2021/9/6 - 10:42
      **/
     Object getBean(String name);
 

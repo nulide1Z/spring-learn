@@ -1,0 +1,29 @@
+package cn.wyw.springfreamework.beans.factory.support;
+
+import cn.wyw.springfreamework.BeansException;
+import cn.wyw.springfreamework.beans.factory.config.BeanDefinition;
+import java.lang.reflect.Constructor;
+import java.util.Objects;
+
+/**
+ * 实例化策略
+ *
+ * @author wangyuwen
+ * @version 1.0, 2021/9/6 17:19
+ */
+public interface InstantiationStrategy {
+
+    /**
+     * 实例化
+     *
+     * @param beanDefinition bean 定义
+     * @param beanName bean 名称
+     * @param constructor 构造器
+     * @param args 参数
+     * @return 实例化对象
+     * @author wangyuwen
+     * @date 2021/9/6 - 17:21
+     **/
+    Object instantiate(BeanDefinition beanDefinition, String beanName, Constructor constructor, Object[] args) throws BeansException;
+
+}

@@ -10,6 +10,11 @@ public interface SingletonBeanRegister {
 
     /**
      * 获取单例bean
+     *
+     * @param beanName bean 名称
+     * @return  单例bean
+     * @author wangyuwen
+     * @date 2021/9/6 - 10:05
      **/
     Object getSingleton(String beanName);
 

@@ -2,6 +2,7 @@ package cn.wyw.springfreamework;
 
 import cn.wyw.springfreamework.beandefinition.BeanDefinition;
 import cn.wyw.springfreamework.beandefinition.BeanFactory;
+import java.cn.wyw.springfreamework.AService;
 import org.junit.Test;
 
 /**

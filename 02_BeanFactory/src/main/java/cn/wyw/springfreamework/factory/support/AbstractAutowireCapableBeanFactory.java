@@ -1,6 +1,6 @@
 package cn.wyw.springfreamework.factory.support;
 
-import cn.wyw.springfreamework.factory.BaseException;
+import cn.wyw.springfreamework.factory.BeanException;
 import cn.wyw.springfreamework.factory.config.BeanDefinition;
 
 /**
@@ -12,12 +12,12 @@ import cn.wyw.springfreamework.factory.config.BeanDefinition;
 public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory {
 
     @Override
-    protected Object createBean(String beanName, BeanDefinition beanDefinition) throws BaseException {
+    protected Object createBean(String beanName, BeanDefinition beanDefinition) throws BeanException {
         Object bean  = null;
         try {
             bean = beanDefinition.getBeanClass().newInstance();
         } catch (InstantiationException  | IllegalAccessException e) {
-            throw new BaseException("InstantiationException exception", e);
+            throw new BeanException("InstantiationException exception", e);
         }
         addSingleton(beanName, bean);
         return bean;

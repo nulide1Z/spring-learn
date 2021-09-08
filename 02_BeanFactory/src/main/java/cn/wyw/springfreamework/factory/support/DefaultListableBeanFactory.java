@@ -1,6 +1,6 @@
 package cn.wyw.springfreamework.factory.support;
 
-import cn.wyw.springfreamework.factory.BaseException;
+import cn.wyw.springfreamework.factory.BeanException;
 import cn.wyw.springfreamework.factory.config.BeanDefinition;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author wangyuwen
  * @version 1.0, 2021/8/30 23:23
  */
-public class DefaultBeanListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegister {
+public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegister {
 
     private Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
 
@@ -25,7 +25,7 @@ public class DefaultBeanListableBeanFactory extends AbstractAutowireCapableBeanF
     protected BeanDefinition getBeanDefinition(String beanName) {
         BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
         if (beanDefinition == null ){
-            throw new BaseException("No bean named :"+ beanName);
+            throw new BeanException("No bean named :"+ beanName);
         }
         return beanDefinition;
     }
