@@ -11,14 +11,16 @@ import cn.wyw.springfreamework.factory.config.BeanDefinition;
  */
 public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegister implements BeanFactory {
 
-
     @Override
     public Object getBean(String name) {
-        Object bean  =  getSingleton(name);
+        //  继承DefaultSingletonBeanRegister 根据名称在DefaultSingletonBeanRegister找到
+        Object bean  =  super.getSingleton(name);
         if (bean != null){
             return bean;
         }
+        // 从beanDefinition中找(DefaultListableBeanFactory 中实现) ,
         BeanDefinition beanDefinition = getBeanDefinition(name);
+        //获取bean 的定义, 再通过添加单例 放入到 DefaultSingletonBeanRegister
         return createBean(name, beanDefinition);
     }
 

@@ -1,5 +1,6 @@
 package cn.wyw.springfreamework.beans.factory.support;
 
+import cn.wyw.springfreamework.BeansException;
 import cn.wyw.springfreamework.beans.factory.config.BeanDefinition;
 import java.lang.reflect.Constructor;
 import java.util.Objects;
@@ -16,11 +17,16 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
     protected  Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args){
         Object bean = null;
+        try {
+            bean = createBeanInstance(beanName, beanDefinition, args);
+        } catch (Exception e) {
+            throw  new BeansException("Instantiation of bean failure");
+        }
 
         return bean;
     }
 
-    protected Object createBeanInstance(BeanDefinition beanDefinition, String beanName, Object[] args){
+    protected Object createBeanInstance(String beanName, BeanDefinition beanDefinition,  Object[] args){
         Constructor ctor = null;
         Class<?> beanClass = beanDefinition.getBeanClass();
         Constructor<?>[] declaredConstructors = beanClass.getDeclaredConstructors();
