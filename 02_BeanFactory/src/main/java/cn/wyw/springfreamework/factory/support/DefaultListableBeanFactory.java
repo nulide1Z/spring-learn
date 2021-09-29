@@ -9,14 +9,14 @@ import java.util.concurrent.ConcurrentHashMap;
  * 默认可以展示的bean 工厂
  *
  * @author wangyuwen
- * @version 1.0, 2021/8/30 23:23
+ * @version 1.0, 2021/8/30 23:23l
  */
 public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegister {
 
     private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
 
     @Override
-    public void registerBean(String beanName, BeanDefinition beanDefinition) {
+    public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {
         beanDefinitionMap.put(beanName, beanDefinition);
     }
 

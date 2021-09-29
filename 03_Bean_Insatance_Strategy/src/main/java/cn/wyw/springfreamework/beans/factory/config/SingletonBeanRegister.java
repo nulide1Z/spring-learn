@@ -8,6 +8,14 @@ package cn.wyw.springfreamework.beans.factory.config;
  */
 public interface SingletonBeanRegister {
 
+    /**
+     * 根据名称获取单例Bean
+     *
+     * @param beanName bean名称
+     * @return  单例bean
+     * @author wangyuwen
+     * @date 2021/9/29 - 14:32
+     **/
     Object getSingleton(String beanName);
 
 }

@@ -18,6 +18,6 @@ public interface BeanDefinitionRegister {
      * @author wangyuwen
      * @date 2021/9/1 - 0:42
      **/
-    void registerBean(String beanName, BeanDefinition beanDefinition);
+    void registerBeanDefinition(String beanName, BeanDefinition beanDefinition);
 
 }

@@ -15,6 +15,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
     private InstantiationStrategy instantiationStrategy = new CglibSubclassingInstantiationStrategy();
 
+    @Override
     protected  Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args){
         Object bean = null;
         try {
@@ -22,7 +23,6 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         } catch (Exception e) {
             throw  new BeansException("Instantiation of bean failure");
         }
-
         return bean;
     }
 

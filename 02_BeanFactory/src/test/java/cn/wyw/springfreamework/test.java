@@ -16,7 +16,7 @@ public class test {
     public void testA(){
          BeanDefinition beanDefinition = new BeanDefinition(cn.wyw.springfreamework.aservice.class);
          DefaultListableBeanFactory defaultListableBeanFactory = new DefaultListableBeanFactory();
-         defaultListableBeanFactory.registerBean("aservice", beanDefinition);
+         defaultListableBeanFactory.registerBeanDefinition("aservice", beanDefinition);
 
          // 第一次获取bean
          cn.wyw.springfreamework.aservice aservice = (cn.wyw.springfreamework.aservice) defaultListableBeanFactory.getBean("aservice");

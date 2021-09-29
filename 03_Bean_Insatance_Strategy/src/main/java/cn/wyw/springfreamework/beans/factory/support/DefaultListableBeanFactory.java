@@ -2,6 +2,8 @@ package cn.wyw.springfreamework.beans.factory.support;
 
 import cn.wyw.springfreamework.beans.factory.config.BeanDefinition;
 import cn.wyw.springfreamework.beans.factory.config.SingletonBeanRegister;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 默认可展示 Bean 工厂
@@ -11,18 +13,15 @@ import cn.wyw.springfreamework.beans.factory.config.SingletonBeanRegister;
  */
 public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegister {
 
-    @Override
-    protected BeanDefinition getBeanDefinition(String beanName) {
-        return null;
-    }
+    private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
 
     @Override
-    protected Object createBean(String beanName, BeanDefinition beanDefinition) {
-        return null;
+    protected BeanDefinition getBeanDefinition(String beanName) {
+        return beanDefinitionMap.get(beanName);
     }
 
     @Override
     public Object registerBean(String beanName, BeanDefinition beanDefinition) {
-        return null;
+        return beanDefinitionMap.put(beanName, beanDefinition);
     }
 }

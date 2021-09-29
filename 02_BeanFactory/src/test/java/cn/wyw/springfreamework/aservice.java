@@ -8,6 +8,12 @@ package cn.wyw.springfreamework;
  */
 public class aservice {
 
+    /*private String name;
+
+    public aservice(String name) {
+        this.name = name;
+    }*/
+
     public void  test(){
         System.out.println("test a start");
     }
