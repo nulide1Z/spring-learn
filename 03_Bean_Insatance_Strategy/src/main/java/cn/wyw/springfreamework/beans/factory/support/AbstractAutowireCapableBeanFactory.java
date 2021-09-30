@@ -14,6 +14,7 @@ import java.util.Objects;
 public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory  {
 
     private InstantiationStrategy instantiationStrategy = new CglibSubclassingInstantiationStrategy();
+    private InstantiationStrategy jdkStrategy = new SimpleInstantiationStrategy();
 
     @Override
     protected  Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args){
