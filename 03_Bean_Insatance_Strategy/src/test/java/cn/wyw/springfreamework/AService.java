@@ -14,6 +14,9 @@ public class AService {
         this.name = name;
     }
 
+    public AService() {
+    }
+
     public void test(){
         System.out.println(this.name);
     }

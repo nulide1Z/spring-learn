@@ -17,7 +17,7 @@ public class DefaultSingletonBeanRegister implements SingletonBeanRegister {
 
     @Override
     public Object getSingleton(String beanName) {
-        return singletonMap.get(beanName).getClass();
+        return singletonMap.get(beanName);
     }
 
     protected void addSingleton(String beanName, Object singletonObject){

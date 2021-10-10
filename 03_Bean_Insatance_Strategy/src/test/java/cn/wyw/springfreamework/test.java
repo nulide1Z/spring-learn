@@ -16,7 +16,10 @@ public class test {
     public void testStrategy(){
         DefaultListableBeanFactory defaultListableBeanFactory = new DefaultListableBeanFactory();
         BeanDefinition beanDefinition = new BeanDefinition(AService.class);
-         defaultListableBeanFactory.registerBean("aservice", beanDefinition);
+        defaultListableBeanFactory.registerBean("AService", beanDefinition);
+
+        AService bean = (AService) defaultListableBeanFactory.getBean("AService", "罗马哥");
+        bean.test();
 
     }
 
