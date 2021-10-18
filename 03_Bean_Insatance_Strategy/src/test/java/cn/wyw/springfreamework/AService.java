@@ -10,9 +10,23 @@ public class AService {
 
     private String name;
 
+/*    private Integer sex;
+
+    private Integer num;*/
+
     public AService(String name) {
         this.name = name;
     }
+/*  // 不同参数类型的构造会有问题
+    public AService(String name, Integer sex) {
+        this.name = name;
+        this.sex = sex;
+    }
+
+    public AService(Integer sex, Integer num) {
+        this.sex = sex;
+        this.num = num;
+    }*/
 
     public AService() {
     }

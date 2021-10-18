@@ -6,7 +6,7 @@ import java.lang.reflect.Constructor;
 import java.util.Objects;
 
 /**
- * 实现默认bean创建工厂的超类
+ * 实现默认bean创建工厂的抽象类
  *
  * @author wangyuwen
  * @version 1.0, 2021/9/6 16:26
@@ -32,6 +32,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         Class<?> beanClass = beanDefinition.getBeanClass();
         Constructor<?>[] declaredConstructors = beanClass.getDeclaredConstructors();
         for (Constructor<?> declaredConstructor : declaredConstructors) {
+            // 这里遍历出来的感觉不够严谨, 如果有同长度, 参数类型不一致的构造器, 就有问题了
             if (null != args && declaredConstructor.getParameterTypes().length == args.length){
                 ctor = declaredConstructor;
                 break;
