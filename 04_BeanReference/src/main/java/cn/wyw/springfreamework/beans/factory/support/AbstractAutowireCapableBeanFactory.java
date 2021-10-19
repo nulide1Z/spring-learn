@@ -1,7 +1,11 @@
 package cn.wyw.springfreamework.beans.factory.support;
 
-import cn.wyw.springfreamework.BeansException;
+import cn.hutool.core.bean.BeanUtil;
+import cn.wyw.springfreamework.beans.BeansException;
+import cn.wyw.springfreamework.beans.PropertyValue;
+import cn.wyw.springfreamework.beans.PropertyValues;
 import cn.wyw.springfreamework.beans.factory.config.BeanDefinition;
+import cn.wyw.springfreamework.beans.factory.config.BeanReference;
 import java.lang.reflect.Constructor;
 
 /**
@@ -17,13 +21,34 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
     @Override
     protected  Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args){
-        Object bean = null;
+        Object bean;
         try {
             bean = createBeanInstance(beanName, beanDefinition, args);
+            // apply property value
+            this.applyPropertyValues(beanName, bean, beanDefinition);
         } catch (Exception e) {
             throw  new BeansException("Instantiation of bean failure");
         }
         return bean;
+    }
+
+    public  void applyPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
+
+        try {
+            PropertyValues propertyValues = beanDefinition.getPropertyValues();
+            for (PropertyValue propertyValue : propertyValues.getPropertyValue()) {
+                String name = propertyValue.getName();
+                Object value = propertyValue.getValue();
+                if (value instanceof BeanReference){
+                    BeanReference beanReference = (BeanReference) value;
+                    value = getBean(beanReference.getBeanName());
+                }
+                // 属性填充
+                BeanUtil.setFieldValue(bean, name, value);
+            }
+        } catch (Exception e) {
+            throw new BeansException("Error setting property values：" + beanName);
+        }
     }
 
     protected Object createBeanInstance(String beanName, BeanDefinition beanDefinition,  Object[] args){

@@ -2,7 +2,6 @@ package cn.wyw.springfreamework;
 
 import cn.wyw.springfreamework.beans.factory.config.BeanDefinition;
 import cn.wyw.springfreamework.beans.factory.support.DefaultListableBeanFactory;
-import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import net.sf.cglib.proxy.Enhancer;
@@ -23,7 +22,7 @@ public class test {
     public void testStrategy(){
         DefaultListableBeanFactory defaultListableBeanFactory = new DefaultListableBeanFactory();
         BeanDefinition beanDefinition = new BeanDefinition(AService.class);
-        defaultListableBeanFactory.registerBean("AService", beanDefinition);
+        defaultListableBeanFactory.registerBeanDefinition("AService", beanDefinition);
 
         AService bean = (AService) defaultListableBeanFactory.getBean("AService", "罗马哥", 1);
         bean.test();

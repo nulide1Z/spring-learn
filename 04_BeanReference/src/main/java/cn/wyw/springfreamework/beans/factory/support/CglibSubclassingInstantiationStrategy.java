@@ -1,10 +1,11 @@
 package cn.wyw.springfreamework.beans.factory.support;
 
-import cn.wyw.springfreamework.BeansException;
+import cn.wyw.springfreamework.beans.BeansException;
 import cn.wyw.springfreamework.beans.factory.config.BeanDefinition;
 import java.lang.reflect.Constructor;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.NoOp;
+
 
 /**
  * cglib子类实例化策略实现类

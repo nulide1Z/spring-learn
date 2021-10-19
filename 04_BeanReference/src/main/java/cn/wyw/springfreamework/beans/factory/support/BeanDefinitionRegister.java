@@ -11,14 +11,14 @@ import cn.wyw.springfreamework.beans.factory.config.BeanDefinition;
 public interface BeanDefinitionRegister {
 
     /**
-     * TODO 添加方法注释
+     * 注册bean
      *
-     * @param beanName
-     * @param beanDefinition
-     * @return
+     * @param beanName bean名称
+     * @param beanDefinition bean 定义
+     * @return 返回值
      * @author wangyuwen
      * @date 2021/9/30 - 16:03
      **/
-    Object registerBean(String beanName, BeanDefinition beanDefinition);
+    Object registerBeanDefinition(String beanName, BeanDefinition beanDefinition);
 
 }

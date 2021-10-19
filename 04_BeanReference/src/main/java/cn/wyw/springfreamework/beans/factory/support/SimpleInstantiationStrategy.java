@@ -1,6 +1,6 @@
 package cn.wyw.springfreamework.beans.factory.support;
 
-import cn.wyw.springfreamework.BeansException;
+import cn.wyw.springfreamework.beans.BeansException;
 import cn.wyw.springfreamework.beans.factory.config.BeanDefinition;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
