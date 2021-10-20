@@ -21,4 +21,8 @@ public interface BeanDefinitionRegister {
      **/
     Object registerBeanDefinition(String beanName, BeanDefinition beanDefinition);
 
+    boolean containsBeanDefinition(String beanName);
+
+    String[] getBeanDefinitionNames();
+
 }

@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>cn.wyw.springfreamework</groupId>
-  <artifactId>Bean_Reference</artifactId>
+  <artifactId>04_BeanReference</artifactId>
   <version>1.0-SNAPSHOT</version>
   <dependencies>
     <dependency>

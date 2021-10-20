@@ -23,4 +23,17 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     public Object registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {
         return beanDefinitionMap.put(beanName, beanDefinition);
     }
+
+    @Override
+    public boolean containsBeanDefinition(String beanName) {
+        if (beanName == null || beanName.length() == 0){
+            throw new IllegalArgumentException("beanName cant be null");
+        }
+        return beanDefinitionMap.containsKey(beanName);
+    }
+
+    @Override
+    public String[] getBeanDefinitionNames() {
+        return new String[0];
+    }
 }
