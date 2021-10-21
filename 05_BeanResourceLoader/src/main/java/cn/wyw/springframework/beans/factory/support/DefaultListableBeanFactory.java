@@ -1,6 +1,11 @@
 package cn.wyw.springframework.beans.factory.support;
 
+import cn.wyw.springframework.beans.BeansException;
+import cn.wyw.springframework.beans.factory.ConfigurableListableBeanFactory;
+import cn.wyw.springframework.beans.factory.config.ConfigurableBeanFactory;
 import cn.wyw.springframework.beans.factory.config.BeanDefinition;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -10,18 +15,15 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author wangyuwen
  * @version 1.0, 2021/9/7 15:44
  */
-public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegister {
+public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegister, ConfigurableListableBeanFactory {
 
     private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
 
-    @Override
-    protected BeanDefinition getBeanDefinition(String beanName) {
-        return beanDefinitionMap.get(beanName);
-    }
+
 
     @Override
-    public Object registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {
-        return beanDefinitionMap.put(beanName, beanDefinition);
+    public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {
+         beanDefinitionMap.put(beanName, beanDefinition);
     }
 
     @Override
@@ -33,7 +35,28 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     }
 
     @Override
+    public <T> Map<String, T> getBeansOfType(Class<T> type) throws BeansException {
+        Map<String, T> result = new LinkedHashMap<>();
+        beanDefinitionMap.forEach((beanName, beanDefinition)->{
+            Class beanClass = beanDefinition.getBeanClass();
+            if (type.isAssignableFrom(beanClass)){
+                result.put(beanName, (T) getBean(beanName));
+            }
+        });
+        return result;
+    }
+
+    @Override
     public String[] getBeanDefinitionNames() {
-        return new String[0];
+        return beanDefinitionMap.keySet().toArray(new String[0]);
+    }
+
+    @Override
+    public BeanDefinition getBeanDefinition(String beanName) throws BeansException {
+        BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
+        if (beanDefinition == null){
+            throw new BeansException("cant find beanDefinition by bean name");
+        }
+        return beanDefinition;
     }
 }

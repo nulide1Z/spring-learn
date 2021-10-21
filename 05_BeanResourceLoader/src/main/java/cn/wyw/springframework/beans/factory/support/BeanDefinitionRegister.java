@@ -1,5 +1,6 @@
 package cn.wyw.springframework.beans.factory.support;
 
+import cn.wyw.springframework.beans.BeansException;
 import cn.wyw.springframework.beans.factory.config.BeanDefinition;
 
 /**
@@ -19,7 +20,17 @@ public interface BeanDefinitionRegister {
      * @author wangyuwen
      * @date 2021/9/30 - 16:03
      **/
-    Object registerBeanDefinition(String beanName, BeanDefinition beanDefinition);
+    void registerBeanDefinition(String beanName, BeanDefinition beanDefinition);
+
+
+    /**
+     * 使用Bean名称查询BeanDefinition
+     *
+     * @param beanName bean 名称
+     * @return bean定义
+     * @throws BeansException bean异常
+     */
+    BeanDefinition getBeanDefinition(String beanName) throws BeansException;
 
     boolean containsBeanDefinition(String beanName);
 

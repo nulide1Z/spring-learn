@@ -30,4 +30,15 @@ public interface BeanFactory {
      **/
     Object getBean(String name, Object...args);
 
+    /**
+     * 按名称和类型获取bean
+     *
+     * @param name bean名称
+     * @param requiredType 所需类型
+     * @return  bean
+     * @author wangyuwen
+     * @date 2021/10/21 - 16:16
+     **/
+    <T> T getBean(String name, Class<T> requiredType);
+
 }
