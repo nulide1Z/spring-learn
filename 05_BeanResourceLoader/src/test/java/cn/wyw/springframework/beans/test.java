@@ -56,8 +56,8 @@ public class test {
         Resource resource = defaultResourceLoader.getResource("classpath:spring.xml");
         // 通过XmlBeanDefinition 去去遍历读取定义的bean 并且设置属性
         DefaultListableBeanFactory defaultListableBeanFactory = new DefaultListableBeanFactory();
-       /* XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(defaultListableBeanFactory);
-        xmlBeanDefinitionReader.loadBeanDefinition(resource);*/
+        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(defaultListableBeanFactory);
+        xmlBeanDefinitionReader.loadBeanDefinition(resource);
         // 直接获取已经注册的bean
         Plate plate = (Plate) defaultListableBeanFactory.getBean("plate", Plate.class);
         plate.getApple("wyww");
