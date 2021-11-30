@@ -59,7 +59,7 @@ public class test {
         XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(defaultListableBeanFactory);
         xmlBeanDefinitionReader.loadBeanDefinition(resource);
         // 直接获取已经注册的bean
-        Plate plate = (Plate) defaultListableBeanFactory.getBean("plate", Plate.class);
+        Plate plate =  defaultListableBeanFactory.getBean("plate", Plate.class);
         plate.getApple("wyww");
     }
 

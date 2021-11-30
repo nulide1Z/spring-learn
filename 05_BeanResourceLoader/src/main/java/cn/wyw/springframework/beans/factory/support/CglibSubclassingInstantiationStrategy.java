@@ -16,7 +16,7 @@ import net.sf.cglib.proxy.NoOp;
 public class CglibSubclassingInstantiationStrategy implements InstantiationStrategy {
 
     @Override
-    public Object instantiate(BeanDefinition beanDefinition, String beanName, Constructor constructor, Object[] args)
+    public Object instantiate(BeanDefinition beanDefinition, String beanName, Constructor<?> constructor, Object[] args)
         throws BeansException {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(beanDefinition.getBeanClass());

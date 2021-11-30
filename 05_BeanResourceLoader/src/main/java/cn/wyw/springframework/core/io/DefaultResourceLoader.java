@@ -4,7 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * 默认资源加载实现类
+ * 默认资源加载器
  *
  * @author wangyuwen
  * @version 1.0, 2021/10/20 14:42

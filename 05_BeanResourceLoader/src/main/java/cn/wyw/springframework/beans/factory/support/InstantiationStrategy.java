@@ -24,6 +24,6 @@ public interface InstantiationStrategy {
     * @date 2021/9/29 - 17:02
     **/
     Object instantiate(
-        BeanDefinition beanDefinition, String beanName, Constructor constructor, Object[] args) throws BeansException;
+        BeanDefinition beanDefinition, String beanName, Constructor<?> constructor, Object[] args) throws BeansException;
 
 }

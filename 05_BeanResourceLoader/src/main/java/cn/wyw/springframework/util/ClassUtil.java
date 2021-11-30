@@ -1,7 +1,7 @@
 package cn.wyw.springframework.util;
 
 /**
- * class util
+ * class util todo 资源加载线程问题
  *
  * @author wangyuwen
  * @version 1.0, 2021/10/21 11:25
