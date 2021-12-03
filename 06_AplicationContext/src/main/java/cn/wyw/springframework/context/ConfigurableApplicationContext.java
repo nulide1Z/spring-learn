@@ -1,5 +1,7 @@
 package cn.wyw.springframework.context;
 
+import cn.wyw.springframework.beans.BeansException;
+
 /**
  * 可配置的应用程序上下文
  *
@@ -9,8 +11,9 @@ package cn.wyw.springframework.context;
 public interface ConfigurableApplicationContext extends ApplicationContext {
 
     /**
-     * 刷新应用上下文
+     * 刷新容器
+     * @throws BeansException 定义的bean异常
      **/
-    void refresh();
+    void refresh() throws BeansException;;
 
 }

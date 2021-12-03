@@ -3,6 +3,7 @@ package cn.wyw.springframework.beans.factory;
 import cn.wyw.springframework.beans.BeansException;
 import cn.wyw.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import cn.wyw.springframework.beans.factory.config.BeanDefinition;
+import cn.wyw.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import cn.wyw.springframework.beans.factory.config.ConfigurableBeanFactory;
 
 /**
@@ -13,5 +14,16 @@ import cn.wyw.springframework.beans.factory.config.ConfigurableBeanFactory;
  */
 public interface ConfigurableListableBeanFactory extends ListableBeanFactory, AutowireCapableBeanFactory,ConfigurableBeanFactory {
 
+    /**
+     * 获取BeanDefinition
+     *
+     * @param beanName bean名称
+     * @return BeanDefinition
+     * @throws BeansException bean 异常
+     * @author wangyuwen
+     * @date 2021/12/3 - 11:44
+     **/
     BeanDefinition getBeanDefinition(String beanName) throws BeansException;
+
+    void addBeanPostProcessor(BeanFactoryPostProcessor beanFactoryPostProcessor);
 }

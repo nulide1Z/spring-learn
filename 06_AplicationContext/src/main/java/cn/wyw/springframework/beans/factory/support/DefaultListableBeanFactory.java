@@ -2,6 +2,7 @@ package cn.wyw.springframework.beans.factory.support;
 
 import cn.wyw.springframework.beans.BeansException;
 import cn.wyw.springframework.beans.factory.ConfigurableListableBeanFactory;
+import cn.wyw.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import cn.wyw.springframework.beans.factory.config.ConfigurableBeanFactory;
 import cn.wyw.springframework.beans.factory.config.BeanDefinition;
 import java.util.HashMap;
@@ -18,8 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory implements BeanDefinitionRegister, ConfigurableListableBeanFactory {
 
     private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
-
-
 
     @Override
     public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {
@@ -58,5 +57,10 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
             throw new BeansException("cant find beanDefinition by bean name");
         }
         return beanDefinition;
+    }
+
+    @Override
+    public void addBeanPostProcessor(BeanFactoryPostProcessor beanFactoryPostProcessor) {
+
     }
 }
