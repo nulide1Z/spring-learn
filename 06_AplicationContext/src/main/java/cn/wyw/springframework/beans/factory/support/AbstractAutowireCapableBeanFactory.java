@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.wyw.springframework.beans.BeansException;
 import cn.wyw.springframework.beans.PropertyValue;
 import cn.wyw.springframework.beans.PropertyValues;
+import cn.wyw.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import cn.wyw.springframework.beans.factory.config.BeanDefinition;
 import cn.wyw.springframework.beans.factory.config.BeanReference;
 import java.lang.reflect.Constructor;
@@ -14,7 +15,7 @@ import java.lang.reflect.Constructor;
  * @author wangyuwen
  * @version 1.0, 2021/9/6 16:26
  */
-public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory  {
+public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory implements AutowireCapableBeanFactory {
 
     private InstantiationStrategy instantiationStrategy = new CglibSubclassingInstantiationStrategy();
     private InstantiationStrategy jdkStrategy = new SimpleInstantiationStrategy();
@@ -75,4 +76,6 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     public void setInstantiationStrategy(InstantiationStrategy instantiationStrategy) {
         this.instantiationStrategy = instantiationStrategy;
     }
+
+    // todo
 }

@@ -31,20 +31,20 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         // 4. BeanPostProcess 需要首先被加载
         registerBeanPostProcessors(beanFactory);
         // 5. 提前实例化单例bean
-        // beanFactory.preInstantiateSingletons(beanFactory);
+         beanFactory.preInstantiateSingletons(beanFactory);
 
     }
 
     private  void invokeBeanFactoryPostProcessor(ConfigurableListableBeanFactory beanFactory){
-        Map<String, BeanPostProcessor> beansOfType = beanFactory.getBeansOfType(BeanPostProcessor.class);
-        for (BeanPostProcessor value : beansOfType.values()) {
-            // beanFactory.postBeanFactory(value);
+        Map<String, BeanFactoryPostProcessor> beansOfType = beanFactory.getBeansOfType(BeanFactoryPostProcessor.class);
+        for (BeanFactoryPostProcessor beanFactoryPostProcessor : beansOfType.values()) {
+            beanFactoryPostProcessor.postProcessBeanFactory(beanFactory);
         }
     }
 
     private void registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) {
-        Map<String, BeanFactoryPostProcessor> beansOfType = beanFactory.getBeansOfType(BeanFactoryPostProcessor.class);
-        for (BeanFactoryPostProcessor value : beansOfType.values()) {
+        Map<String, BeanPostProcessor> beansOfType = beanFactory.getBeansOfType(BeanPostProcessor.class);
+        for (BeanPostProcessor value : beansOfType.values()) {
             beanFactory.addBeanPostProcessor(value);
         }
     }
@@ -68,4 +68,29 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
      * @date 2021/12/3 - 11:28
      **/
     protected abstract ConfigurableListableBeanFactory getBeanFactory();
+
+    @Override
+    public Object getBean(String name) {
+        return getBeanFactory().getBean(name);
+    }
+
+    @Override
+    public Object getBean(String name, Object... args) {
+        return getBeanFactory().getBean(name, args);
+    }
+
+    @Override
+    public <T> T getBean(String name, Class<T> requiredType) {
+        return getBeanFactory().getBean(name, requiredType);
+    }
+
+    @Override
+    public <T> Map<String, T> getBeansOfType(Class<T> type) throws BeansException {
+        return getBeanFactory().getBeansOfType(type);
+    }
+
+    @Override
+    public String[] getBeanDefinitionNames() {
+        return getBeanFactory().getBeanDefinitionNames();
+    }
 }

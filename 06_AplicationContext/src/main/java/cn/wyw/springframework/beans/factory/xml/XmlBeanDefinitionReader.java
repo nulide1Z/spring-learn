@@ -117,4 +117,11 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             this.getRegister().registerBeanDefinition(beanName, beanDefinition);
         }
     }
+
+    @Override
+    public void loadBeanDefinitions(String... locations) throws BeansException {
+        for (String location : locations) {
+            loadBeanDefinitions(location);
+        }
+    }
 }

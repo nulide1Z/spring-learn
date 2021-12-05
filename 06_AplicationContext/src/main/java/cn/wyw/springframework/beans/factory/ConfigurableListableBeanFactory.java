@@ -1,10 +1,7 @@
 package cn.wyw.springframework.beans.factory;
 
 import cn.wyw.springframework.beans.BeansException;
-import cn.wyw.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import cn.wyw.springframework.beans.factory.config.BeanDefinition;
-import cn.wyw.springframework.beans.factory.config.BeanFactoryPostProcessor;
-import cn.wyw.springframework.beans.factory.config.ConfigurableBeanFactory;
+import cn.wyw.springframework.beans.factory.config.*;
 
 /**
  * 大多数可列出的 bean 工厂要实现的配置接口。除了 {@link ConfigurableBeanFactory} 之外，它还提供了分析和修改 bean 定义以及预实例化单例的工具。
@@ -25,5 +22,7 @@ public interface ConfigurableListableBeanFactory extends ListableBeanFactory, Au
      **/
     BeanDefinition getBeanDefinition(String beanName) throws BeansException;
 
-    void addBeanPostProcessor(BeanFactoryPostProcessor beanFactoryPostProcessor);
+    void preInstantiateSingletons(BeanFactory beanFactory) throws BeansException;
+
+    void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) throws BeansException;
 }

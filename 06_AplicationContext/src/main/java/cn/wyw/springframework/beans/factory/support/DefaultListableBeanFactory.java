@@ -1,8 +1,10 @@
 package cn.wyw.springframework.beans.factory.support;
 
 import cn.wyw.springframework.beans.BeansException;
+import cn.wyw.springframework.beans.factory.BeanFactory;
 import cn.wyw.springframework.beans.factory.ConfigurableListableBeanFactory;
 import cn.wyw.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import cn.wyw.springframework.beans.factory.config.BeanPostProcessor;
 import cn.wyw.springframework.beans.factory.config.ConfigurableBeanFactory;
 import cn.wyw.springframework.beans.factory.config.BeanDefinition;
 import java.util.HashMap;
@@ -60,7 +62,12 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     }
 
     @Override
-    public void addBeanPostProcessor(BeanFactoryPostProcessor beanFactoryPostProcessor) {
+    public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
+
+    }
+
+    @Override
+    public void preInstantiateSingletons(BeanFactory beanFactory) throws BeansException {
 
     }
 }
