@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+  <bean id = "apple" class = "cn.wyw.springframework.beans.Apple"/>
+  <bean id = "plate" class = "cn.wyw.springframework.beans.Plate">
+    <property name  = "name" value = "qwer"/>
+    <property name  = "color" value="Black" />
+    <property name  = "size" value = "8"/>
+    <property name  = "apple" ref = "apple"/>
+  </bean>
+
+<!--  <bean id="MyBeanFactoryPostProcessor" class="cn.wyw.springframework.beans.MyBeanFactoryPostProcessor"/>-->
+<!--  <bean id="MyBeanPostProcessor" class="cn.wyw.springframework.beans.MyBeanPostProcessor"/>-->
+</beans>

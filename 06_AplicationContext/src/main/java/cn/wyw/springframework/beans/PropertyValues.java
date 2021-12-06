@@ -21,9 +21,9 @@ public class PropertyValues {
         return this.list.toArray(new PropertyValue[0]);
     }
 
-    public PropertyValue getPropertyVlaue(String name){
+    public PropertyValue getPropertyValue(String name){
         for (PropertyValue propertyValue : list) {
-            if (propertyValue.getName() == name){
+            if (propertyValue.getName().equals(name)){
                 return propertyValue;
             }
         }

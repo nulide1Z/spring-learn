@@ -18,9 +18,7 @@ public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
     public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
         BeanDefinition plate = configurableListableBeanFactory.getBeanDefinition("plate");
         PropertyValues propertyValues = plate.getPropertyValues();
-        System.out.println("未修改之前属性"+ propertyValues);
-        PropertyValue propertyValue = new PropertyValue("color","black");
+        PropertyValue propertyValue = new PropertyValue("name","wyww");
         propertyValues.addPropertyValue(propertyValue);
-        System.out.println("修改之后bean definition 的属性"+ propertyValues);
     }
 }

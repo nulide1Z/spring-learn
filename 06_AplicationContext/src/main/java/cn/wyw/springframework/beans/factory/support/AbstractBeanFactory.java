@@ -57,7 +57,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegister i
      * @param beanName bean 名称
      * @param beanDefinition bean 定义
      * @param args 参数
-     * @return
+     * @return Object 创建的bean
      * @author wangyuwen
      * @date 2021/9/29 - 16:51
      **/
@@ -71,10 +71,9 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegister i
         return this.beanPostProcessors;
     }
 
-    // todo
-   /* @Override
+    @Override
     public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
         beanPostProcessors.remove(beanPostProcessor);
         beanPostProcessors.add(beanPostProcessor);
-    }*/
+    }
 }

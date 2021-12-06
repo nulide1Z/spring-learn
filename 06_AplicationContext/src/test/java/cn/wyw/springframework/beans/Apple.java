@@ -17,6 +17,7 @@ public class Apple {
         map.put("wyww","7987865");
         map.put("type","fustian");
         map.put("name","feudal");
+        map.put("qwer","测试一下");
     }
 
     public String getByName(String name){

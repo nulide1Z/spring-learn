@@ -23,6 +23,11 @@ public class MyBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        if ("plate".equals(beanName)){
+            Plate plate = (Plate) bean;
+            plate.setColor("yellow");
+            System.out.println("bean 实例化之后赋值 "+plate);
+        }
         return bean;
     }
 }

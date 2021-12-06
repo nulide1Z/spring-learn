@@ -16,6 +16,8 @@ public class Plate {
 
     private String size;
 
+
+
     public String getColor() {
         return color;
     }
@@ -32,7 +34,11 @@ public class Plate {
         this.size = size;
     }
 
-    public void getApple(String name){
+    public String getAppleName(){
+        return apple.getByName(this.name)+" color:" +this.color +" size:" +size;
+    }
+
+    public void getAppleName(String name){
         System.out.println(apple.getByName(name));
     }
 

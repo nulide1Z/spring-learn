@@ -9,7 +9,7 @@ import cn.wyw.springframework.beans.factory.config.*;
  * @author wangyuwen
  * @version 1.0, 2021/10/21 16:40
  */
-public interface ConfigurableListableBeanFactory extends ListableBeanFactory, AutowireCapableBeanFactory,ConfigurableBeanFactory {
+public interface ConfigurableListableBeanFactory extends ListableBeanFactory, AutowireCapableBeanFactory, ConfigurableBeanFactory {
 
     /**
      * 获取BeanDefinition

@@ -106,9 +106,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
                 String attrRef = property.getAttribute("ref");
                 // 获取属性值
                 Object value = StrUtil.isEmpty(attrValue) ? new BeanReference(attrRef) : attrValue;
-                PropertyValues propertyValues = new PropertyValues();
-                propertyValues.addPropertyValue(new PropertyValue(attrName, value));
-                beanDefinition.setPropertyValue(propertyValues);
+                beanDefinition.getPropertyValues().addPropertyValue(new PropertyValue(attrName, value));
             }
             if ( this.getRegister().containsBeanDefinition(beanName)){
                 throw new BeansException("Duplicate register xml bean");
