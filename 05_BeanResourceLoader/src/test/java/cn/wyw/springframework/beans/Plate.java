@@ -1,5 +1,7 @@
 package cn.wyw.springframework.beans;
 
+import java.math.BigDecimal;
+
 /**
  *
  *

@@ -2,6 +2,10 @@ package cn.wyw.springframework.beans.factory.support;
 
 import cn.wyw.springframework.beans.factory.BeanFactory;
 import cn.wyw.springframework.beans.factory.config.BeanDefinition;
+import cn.wyw.springframework.beans.factory.config.BeanPostProcessor;
+import cn.wyw.springframework.beans.factory.config.ConfigurableBeanFactory;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * bean 工厂模板方法
@@ -9,7 +13,9 @@ import cn.wyw.springframework.beans.factory.config.BeanDefinition;
  * @author wangyuwen
  * @version 1.0, 2021/9/6 15:46
  */
-public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegister implements BeanFactory {
+public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegister implements ConfigurableBeanFactory {
+
+    private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
     @Override
     public Object getBean(String name) {
@@ -56,4 +62,19 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegister i
      * @date 2021/9/29 - 16:51
      **/
     protected abstract Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args);
+
+    /**
+     *  获取bean 后置处理器
+     * @return 后置处理器集合
+     */
+    public List<BeanPostProcessor> getBeanPostProcessors() {
+        return this.beanPostProcessors;
+    }
+
+    // todo
+   /* @Override
+    public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
+        beanPostProcessors.remove(beanPostProcessor);
+        beanPostProcessors.add(beanPostProcessor);
+    }*/
 }

@@ -3,5 +3,10 @@
   <bean id = "plate" class = "cn.wyw.springframework.beans.Plate">
     <property name  = "name" value = "qwer"/>
     <property name  = "apple" ref = "apple"/>
+    <property name  = "color" value="Black" />
+    <property name  = "size" value = "8"/>
   </bean>
+
+  <bean id="MyBeanFactoryPostProcessor" class="cn.wyw.springframework.beans.MyBeanFactoryPostProcessor"/>
+  <bean id="MyBeanPostProcessor" class="cn.wyw.springframework.beans.MyBeanPostProcessor"/>
 </beans>

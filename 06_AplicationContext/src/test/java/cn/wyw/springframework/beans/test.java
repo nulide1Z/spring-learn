@@ -63,4 +63,25 @@ public class test {
         plate.getApple("wyww");
     }
 
+    @Test
+    public void testBeanPostProcessor() throws BeansException{
+        DefaultListableBeanFactory defaultListableBeanFactory = new DefaultListableBeanFactory();
+        // 加载spring.xml 里的资源
+        Resource resource = defaultResourceLoader.getResource("classpath:spring.xml");
+        // 通过XmlBeanDefinition 去去遍历读取定义的bean 并且设置属性
+        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(defaultListableBeanFactory);
+        xmlBeanDefinitionReader.loadBeanDefinition(resource);
+
+        // 加载完BeanDefinition 之后, 实例化bean 之前
+        MyBeanFactoryPostProcessor myBeanFactoryPostProcessor = new MyBeanFactoryPostProcessor();
+        myBeanFactoryPostProcessor.postProcessBeanFactory(defaultListableBeanFactory);
+
+        // bean 实例化之后 , 修改bean的属性信息
+        MyBeanPostProcessor myBeanPostProcessor = new MyBeanPostProcessor();
+        defaultListableBeanFactory.addBeanPostProcessor(myBeanPostProcessor);
+        // 直接获取已经注册的bean
+        Plate plate =  defaultListableBeanFactory.getBean("plate", Plate.class);
+        plate.getApple("wyww");
+    }
+
 }

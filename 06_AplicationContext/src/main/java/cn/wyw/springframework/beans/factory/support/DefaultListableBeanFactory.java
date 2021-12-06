@@ -61,10 +61,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
         return beanDefinition;
     }
 
-    @Override
-    public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
 
-    }
 
     @Override
     public void preInstantiateSingletons(BeanFactory beanFactory) throws BeansException {

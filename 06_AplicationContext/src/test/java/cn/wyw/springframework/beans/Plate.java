@@ -12,6 +12,26 @@ public class Plate {
 
     private Apple apple;
 
+    private String color;
+
+    private String size;
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
     public void getApple(String name){
         System.out.println(apple.getByName(name));
     }

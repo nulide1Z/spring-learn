@@ -8,4 +8,8 @@ package cn.wyw.springframework.beans.factory.config;
  */
 public interface AutowireCapableBeanFactory {
 
+    Object applyBeanPostProcessorsBeforeInitialize(Object bean, String beanName);
+
+    Object applyBeanPostProcessorsAfterInitialize(Object bean, String beanName);
+
 }
