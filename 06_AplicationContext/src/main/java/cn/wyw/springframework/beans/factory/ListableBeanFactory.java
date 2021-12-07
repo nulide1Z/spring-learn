@@ -18,6 +18,7 @@ public interface ListableBeanFactory extends BeanFactory{
      * @return  bean map
      * @author wangyuwen
      * @date 2021/10/21 - 16:25
+     * @throws BeansException 异常
      **/
     <T> Map<String, T> getBeansOfType(Class<T> type) throws BeansException;
 

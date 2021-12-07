@@ -10,6 +10,8 @@ import java.util.Map;
 
 /**
  * 抽象应用上下文
+ * 定义refresh 相关的模板方法, 对bean 实例化之前和实例化之后做自定义的操作
+ * 继承了 默认的资源加载器, 实现了可以配置的应用上下文
  *
  * @author wangyuwen
  * @version 1.0, 2021/12/2 14:42
@@ -27,15 +29,15 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         ConfigurableListableBeanFactory beanFactory = getBeanFactory();
 
         // 3. 在bean 实例化之前, 调BeanFactoryPostProcessor (Invoke factory processors registered as beans in the context)
-        this.invokeBeanFactoryPostProcessor(beanFactory);
-        // 4. BeanPostProcess 需要首先被加载
+        this.invokeBeanFactoryPostProcessors(beanFactory);
+        // 4. 实例化bean后置处理器  BeanPostProcess 需要首先被加载
         registerBeanPostProcessors(beanFactory);
-        // 5. 提前实例化单例bean
-         beanFactory.preInstantiateSingletons(beanFactory);
+        // 5. 实例化剩余的单例bean Instantiate all remaining (non-lazy-init) singletons.
+        beanFactory.preInstantiateSingletons(beanFactory);
 
     }
 
-    private  void invokeBeanFactoryPostProcessor(ConfigurableListableBeanFactory beanFactory){
+    private  void invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory beanFactory){
         Map<String, BeanFactoryPostProcessor> beansOfType = beanFactory.getBeansOfType(BeanFactoryPostProcessor.class);
         for (BeanFactoryPostProcessor beanFactoryPostProcessor : beansOfType.values()) {
             beanFactoryPostProcessor.postProcessBeanFactory(beanFactory);

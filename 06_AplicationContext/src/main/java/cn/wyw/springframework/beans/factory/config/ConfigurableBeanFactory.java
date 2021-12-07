@@ -17,6 +17,14 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 
     String SCOPE_PROTOTYPE = "prototype";
 
+    /**
+     * 添加bean后置处理器
+     *
+     * @param beanPostProcessor 后置处理器
+     * @author wangyuwen
+     * @date 2021/12/7 - 14:50
+     * @throws BeansException 异常信息
+     **/
     void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) throws BeansException;
 
 }

@@ -69,6 +69,10 @@ public class test {
         String appleName = plate.getAppleName();
         System.out.println(appleName);
 
+        ClassPathXmlApplicationContext classPathXmlApplicationContext2 = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        Plate plate2 = classPathXmlApplicationContext2.getBean("plate", Plate.class);
+        String appleName2 = plate2.getAppleName();
+        System.out.println(appleName2);
     }
 
 }
