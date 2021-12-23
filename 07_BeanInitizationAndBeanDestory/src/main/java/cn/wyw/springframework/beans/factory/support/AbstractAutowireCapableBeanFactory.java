@@ -64,8 +64,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         return result;
     }
 
-    private void invokeInitMethod(String beanName, Object wrappedBean, Object bean) {
-        // todo 调用初始化方法
+    private void invokeInitMethod(String beanName, Object wrappedBean, BeanDefinition beanDefinition) {
+
     }
 
 

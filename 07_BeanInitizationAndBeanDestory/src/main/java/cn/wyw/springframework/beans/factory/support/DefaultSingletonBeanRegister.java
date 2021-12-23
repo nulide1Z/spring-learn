@@ -22,4 +22,6 @@ public class DefaultSingletonBeanRegister implements SingletonBeanRegister {
     protected void addSingleton(String beanName, Object singletonObject){
         singletonMap.put(beanName, singletonObject);
     }
+
+
 }
