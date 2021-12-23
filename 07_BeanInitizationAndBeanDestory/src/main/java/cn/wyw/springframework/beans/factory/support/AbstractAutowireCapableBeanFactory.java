@@ -4,11 +4,13 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.wyw.springframework.beans.BeansException;
 import cn.wyw.springframework.beans.PropertyValue;
 import cn.wyw.springframework.beans.PropertyValues;
+import cn.wyw.springframework.beans.factory.InitializingBean;
 import cn.wyw.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import cn.wyw.springframework.beans.factory.config.BeanDefinition;
 import cn.wyw.springframework.beans.factory.config.BeanPostProcessor;
 import cn.wyw.springframework.beans.factory.config.BeanReference;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 /**
  * 实现默认bean创建工厂的抽象类
@@ -64,7 +66,22 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         return result;
     }
 
-    private void invokeInitMethod(String beanName, Object wrappedBean, BeanDefinition beanDefinition) {
+    private void invokeInitMethod(String beanName, Object bean, BeanDefinition beanDefinition) {
+        // 实现接口 Initialization
+        if (bean instanceof InitializingBean){
+            ((InitializingBean) bean).afterPropertiesSet();
+        }
+        // 配置信息 init-method
+        String initMethodName = beanDefinition.getInitMethodName();
+        if (initMethodName != null && initMethodName.length() > 0){
+            Method initMethod = beanDefinition.getBeanClass().getMethod(initMethodName);
+            if (null == initMethod){
+                throw new BeansException("Could not find an init method named '" + initMethodName + "' on bean with name '" + beanName + "'");
+            }
+            initMethod.invoke(bean);
+        }
+
+
 
     }
 
