@@ -7,6 +7,9 @@ import cn.wyw.springframework.beans.factory.config.BeanDefinition;
 
 import java.lang.reflect.Method;
 
+/**
+ * 销毁bean适配器,
+ */
 public class DisposableBeanAdapter implements DisposableBean {
 
     private final Object bean;
@@ -22,7 +25,7 @@ public class DisposableBeanAdapter implements DisposableBean {
     }
 
     @Override
-    public void destroy() {
+    public void destroy() throws Exception{
         // 实现接口 DisposableBean
         if (bean instanceof DisposableBean){
             ((DisposableBean)bean).destroy();

@@ -1,12 +1,15 @@
 package cn.wyw.springframework.beans;
 
+import cn.wyw.springframework.beans.factory.DisposableBean;
+import cn.wyw.springframework.beans.factory.InitializingBean;
+
 /**
  *
  *
  * @author wangyuwen
  * @version 1.0, 2021/10/19 14:51
  */
-public class Plate {
+public class Plate implements InitializingBean, DisposableBean {
 
     private String name;
 
@@ -56,5 +59,15 @@ public class Plate {
 
     public void setApple(Apple apple) {
         this.apple = apple;
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        System.out.println("invoke plate destroy method");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("invoke plate afterPropertiesSet method");
     }
 }

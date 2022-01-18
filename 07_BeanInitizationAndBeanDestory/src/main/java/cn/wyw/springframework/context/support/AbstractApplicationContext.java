@@ -44,14 +44,16 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         }
     }
 
+    /**
+     * 注册bean 后置处理器
+     * @param beanFactory bean 工厂
+     */
     private void registerBeanPostProcessors(ConfigurableListableBeanFactory beanFactory) {
         Map<String, BeanPostProcessor> beansOfType = beanFactory.getBeansOfType(BeanPostProcessor.class);
         for (BeanPostProcessor value : beansOfType.values()) {
              beanFactory.addBeanPostProcessor(value);
         }
     }
-
-
 
     /**
      * 刷新BeanFactory
@@ -96,5 +98,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
         return getBeanFactory().getBeanDefinitionNames();
     }
 
+    @Override
+    public void registerShutdownHook() {
+        Runtime.getRuntime().addShutdownHook(new Thread(this::close));
+    }
 
+    @Override
+    public void close() {
+        getBeanFactory().destroySingletons();
+    }
 }

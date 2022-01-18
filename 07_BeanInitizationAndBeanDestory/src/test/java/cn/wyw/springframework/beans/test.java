@@ -29,50 +29,16 @@ public class test {
 
 
     @Test
-    public void testBeanLoaderByXMLResource()  {
-        // 加载spring.xml 里的资源
-        Resource resource = defaultResourceLoader.getResource("classpath:spring.xml");
-        // 通过XmlBeanDefinition 去去遍历读取定义的bean 并且设置属性
-        DefaultListableBeanFactory defaultListableBeanFactory = new DefaultListableBeanFactory();
-        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(defaultListableBeanFactory);
-        xmlBeanDefinitionReader.loadBeanDefinition(resource);
-        // 直接获取已经注册的bean
-        Plate plate =  defaultListableBeanFactory.getBean("plate", Plate.class);
-        plate.getAppleName("wyww");
-    }
+    public void testBeanLoaderByXMLResource() {
+        // 初始化bean factory
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        context.registerShutdownHook();
 
-    @Test
-    public void testBeanPostProcessor() throws BeansException{
-        DefaultListableBeanFactory defaultListableBeanFactory = new DefaultListableBeanFactory();
-        // 加载spring.xml 里的资源
-        Resource resource = defaultResourceLoader.getResource("classpath:spring.xml");
-        // 通过XmlBeanDefinition 去去遍历读取定义的bean 并且设置属性
-        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(defaultListableBeanFactory);
-        xmlBeanDefinitionReader.loadBeanDefinition(resource);
-
-        // 加载完BeanDefinition 之后, 实例化bean 之前
-        MyBeanFactoryPostProcessor myBeanFactoryPostProcessor = new MyBeanFactoryPostProcessor();
-        myBeanFactoryPostProcessor.postProcessBeanFactory(defaultListableBeanFactory);
-
-        // bean 实例化之后 , 修改bean的属性信息
-        MyBeanPostProcessor myBeanPostProcessor = new MyBeanPostProcessor();
-        defaultListableBeanFactory.addBeanPostProcessor(myBeanPostProcessor);
-        // 直接获取已经注册的bean
-        Plate plate =  defaultListableBeanFactory.getBean("plate", Plate.class);
-        System.out.println(plate.getAppleName());
-    }
-
-    @Test
-    public void testApplicationContext() throws BeansException{
-        ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext("classpath:spring-BeanPost.xml");
-        Plate plate = classPathXmlApplicationContext.getBean("plate", Plate.class);
+        // 获取bean 对象调用方法
+        Plate plate = context.getBean("plate", Plate.class);
         String appleName = plate.getAppleName();
-        System.out.println(appleName);
+        System.out.println("apple name :  " + appleName);
 
-        ClassPathXmlApplicationContext classPathXmlApplicationContext2 = new ClassPathXmlApplicationContext("classpath:spring.xml");
-        Plate plate2 = classPathXmlApplicationContext2.getBean("plate", Plate.class);
-        String appleName2 = plate2.getAppleName();
-        System.out.println(appleName2);
     }
 
 }

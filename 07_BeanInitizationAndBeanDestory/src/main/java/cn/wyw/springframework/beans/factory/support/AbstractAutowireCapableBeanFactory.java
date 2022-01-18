@@ -1,9 +1,11 @@
 package cn.wyw.springframework.beans.factory.support;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.wyw.springframework.beans.BeansException;
 import cn.wyw.springframework.beans.PropertyValue;
 import cn.wyw.springframework.beans.PropertyValues;
+import cn.wyw.springframework.beans.factory.DisposableBean;
 import cn.wyw.springframework.beans.factory.InitializingBean;
 import cn.wyw.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import cn.wyw.springframework.beans.factory.config.BeanDefinition;
@@ -38,11 +40,26 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         } catch (Exception e) {
             throw  new BeansException("Instantiation of bean failure");
         }
+        registerDisposableBeanIfNecessary(beanName, bean, beanDefinition);
         addSingleton(beanName, bean);
         return bean;
     }
 
-    private Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition){
+    protected  void registerDisposableBeanIfNecessary(String beanName, Object bean, BeanDefinition beanDefinition){
+        if((bean instanceof DisposableBean) || StrUtil.isNotEmpty(beanDefinition.getDestroyMethodName())){
+            registerDisposableBean(beanName, new DisposableBeanAdapter(bean, beanName, beanDefinition));
+        }
+    }
+
+    /**
+     * 初始化bean 方法
+     * @param beanName bean 名称
+     * @param bean bean
+     * @param beanDefinition bean 定义
+     * @return 初始化后的bean
+     * @throws Exception 异常
+     */
+    private Object initializeBean(String beanName, Object bean, BeanDefinition beanDefinition) throws Exception{
         // 执行 beanPostProcessorsBefore 处理
         Object wrappedBean =  this.applyBeanPostProcessorsBeforeInitialize(bean, beanName);
 
@@ -66,7 +83,14 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         return result;
     }
 
-    private void invokeInitMethod(String beanName, Object bean, BeanDefinition beanDefinition) {
+    /**
+     * 调用初始化方法
+     * @param beanName bean名称
+     * @param bean bean
+     * @param beanDefinition bean 定义
+     * @throws Exception
+     */
+    private void invokeInitMethod(String beanName, Object bean, BeanDefinition beanDefinition) throws Exception {
         // 实现接口 Initialization
         if (bean instanceof InitializingBean){
             ((InitializingBean) bean).afterPropertiesSet();
@@ -80,8 +104,6 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             }
             initMethod.invoke(bean);
         }
-
-
 
     }
 

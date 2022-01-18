@@ -13,11 +13,17 @@ public class Apple {
 
     private static Map<String, String> map = new HashMap<>();
 
-    static {
+    public void initDataMethod(){
+        System.out.println("init data method invoke");
         map.put("wyww","7987865");
         map.put("type","fustian");
         map.put("name","feudal");
         map.put("qwer","测试一下");
+    }
+
+    public void destroyDataMethod(){
+        System.out.println("destroy data method invoke");
+        map.clear();
     }
 
     public String getByName(String name){

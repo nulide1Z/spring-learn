@@ -9,6 +9,7 @@ import java.util.Map;
  * @author wangyuwen
  * @version 1.0, 2021/10/19 14:51
  */
+/*
 public class Apple {
 
     private static Map<String, String> map = new HashMap<>();
@@ -24,3 +25,4 @@ public class Apple {
         return map.get(name);
     }
 }
+*/
