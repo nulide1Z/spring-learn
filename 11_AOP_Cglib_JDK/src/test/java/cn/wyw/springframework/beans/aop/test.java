@@ -1,10 +1,12 @@
 package cn.wyw.springframework.beans.aop;
 
 import cn.wyw.springframework.aop.aspectj.AspectJExpressionPointcut;
+import cn.wyw.springframework.beans.Fruit;
 import cn.wyw.springframework.beans.Plate;
 import org.junit.Test;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 /**
  * @author 1z
@@ -20,5 +22,14 @@ public class test {
 
         System.out.println( aspectJExpressionPointcut.matches(plateClass));
         System.out.println( aspectJExpressionPointcut.matches(getAppleName, plateClass));
+    }
+
+    @Test
+    public void test_proxy_class() {
+        Fruit fruit = (Fruit) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[]{Fruit.class}, (proxy, method, args) -> "你被代理了！");
+        String result = fruit.getByName("dd");
+        String ddd = fruit.register("ddd");
+        System.out.println("测试结果：" + result);
+        System.out.println("测试结果 ：" + ddd);
     }
 }

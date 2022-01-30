@@ -15,6 +15,7 @@ public class IFruitInterceptor implements MethodInterceptor {
             return  methodInvocation.proceed();
         } finally {
             System.out.println("watch by aop");
+            System.out.println("方法名称：" + methodInvocation.getMethod());
             System.out.println("time: "+ (System.currentTimeMillis() - l));
         }
     }

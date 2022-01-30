@@ -28,7 +28,7 @@ public class test_dynamic {
         System.out.println(jdkFruit1.getByName("jdk proxy dd"));
         Fruit cglibIFruit = (Fruit) new Cglib2AopProxy(advisedSupport).getProxy();
 
-        System.out.println(cglibIFruit.getByName("cglib proxy dd"));
+        System.out.println(cglibIFruit.register("cglib proxy dd"));
 
     }
 }

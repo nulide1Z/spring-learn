@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+    <bean id="iFruit" class="cn.wyw.springframework.beans.aop.IFruit"/>
+    <bean id="defaultAdvisorAutoProxyCreator" class="cn.wyw.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+
+    <bean id="beforeAdvice" class="cn.wyw.springframework.beans.aop.IFruitBeforeAdvice"/>
+    <bean id="methodBeforeAdviseInterceptor" class="cn.wyw.springframework.aop.framework.adapter.MethodBeforeAdviseInterceptor">
+        <property name="advice" ref="beforeAdvice"/>
+    </bean>
+    <bean id="pointcutAdvisor" class="cn.wyw.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor">
+        <property name="expression" value="execution(* cn.wyw.springframework.beans.aop.Fruit.*(..))"/>
+        <property name="advice" ref="methodBeforeAdviseInterceptor"/>
+    </bean>
+
+</beans>
