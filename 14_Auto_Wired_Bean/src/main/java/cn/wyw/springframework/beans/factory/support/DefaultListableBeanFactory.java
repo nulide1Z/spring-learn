@@ -7,9 +7,9 @@ import cn.wyw.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import cn.wyw.springframework.beans.factory.config.BeanPostProcessor;
 import cn.wyw.springframework.beans.factory.config.ConfigurableBeanFactory;
 import cn.wyw.springframework.beans.factory.config.BeanDefinition;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import cn.wyw.springframework.util.StringValueResolver;
+
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -56,7 +56,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     public BeanDefinition getBeanDefinition(String beanName) throws BeansException {
         BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
         if (beanDefinition == null){
-            throw new BeansException("cant find beanDefinition by bean name: " + beanName);
+            throw new BeansException("cant find beanDefinition by bean name:" + beanName);
         }
         return beanDefinition;
     }
@@ -66,5 +66,24 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     @Override
     public void preInstantiateSingletons(BeanFactory beanFactory) throws BeansException {
         beanDefinitionMap.keySet().forEach(this::getBean);
+    }
+
+
+    @Override
+    public <T> T getBean(Class<T> requiredType) {
+        List<String> beanNameList=  new ArrayList<>(beanDefinitionMap.size());
+
+        Collection<BeanDefinition> values = beanDefinitionMap.values();
+        for (Map.Entry<String, BeanDefinition> beanDefinitionEntry : beanDefinitionMap.entrySet()) {
+            Class clazz = beanDefinitionEntry.getValue().getBeanClass();
+            if (requiredType.isAssignableFrom(clazz)){
+                beanNameList.add(beanDefinitionEntry.getKey());
+            }
+        }
+        if (1 == beanNameList.size()){
+            return getBean(beanNameList.get(0),requiredType);
+        }
+
+        throw new BeansException("requiredType: " + requiredType +" expected single bean but found "+ beanNameList.size() +" : " +beanNameList);
     }
 }

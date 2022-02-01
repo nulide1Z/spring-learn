@@ -109,7 +109,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
                 beanDefinition.getPropertyValues().addPropertyValue(new PropertyValue(attrName, value));
             }
             if ( this.getRegister().containsBeanDefinition(beanName)){
-                throw new BeansException("Duplicate register xml bean");
+                throw new BeansException("Duplicate register xml bean : " + beanName);
             }
             // 注册bean
             this.getRegister().registerBeanDefinition(beanName, beanDefinition);
