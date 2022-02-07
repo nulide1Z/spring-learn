@@ -17,17 +17,27 @@ public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
      * @param beanName bean 名称
      * @return bean
      */
-   Object postProcessorBeforeInstantiation(Class<?> beanClass, String beanName);
+   Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName);
+
+    /**
+     * 在 实例化之后 后置处理
+     * @param bean bean
+     * @param beanName bean 名称
+     * @return bean
+     */
+   boolean postProcessAfterInstantiation(Object bean, String beanName);
 
 
     /**
      * 后置处理属性值
-     * @param pv 属性值
+     * @param pvs 属性值
      * @param bean bean
      * @param beanName bean 名称
      * @return 属性值对象
      */
-    PropertyValues postProcessPropertyValue(PropertyValues pv, Object bean, String beanName);
+    PropertyValues postProcessPropertyValues(PropertyValues pvs, Object bean, String beanName);
+
+
 
 
 }

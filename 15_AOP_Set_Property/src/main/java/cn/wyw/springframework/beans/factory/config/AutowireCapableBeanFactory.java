@@ -14,7 +14,7 @@ public interface AutowireCapableBeanFactory {
      * @param beanName bean 名称
      * @return bean
      */
-    Object applyBeanPostProcessorsBeforeInitialize(Object bean, String beanName);
+    Object applyBeanPostProcessorsBeforeInitialization(Object bean, String beanName);
 
     /**
      * 在初始化之后应用 Bean 后处理器
@@ -22,6 +22,6 @@ public interface AutowireCapableBeanFactory {
      * @param beanName bean 名称
      * @return bean
      */
-    Object applyBeanPostProcessorsAfterInitialize(Object bean, String beanName);
+    Object applyBeanPostProcessorsAfterInitialization(Object bean, String beanName);
 
 }

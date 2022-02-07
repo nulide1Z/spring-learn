@@ -44,4 +44,11 @@ public class test {
         Fruit iFruit = applicationContext.getBean("iFruit", Fruit.class);
         System.out.println("测试结果：" + iFruit.register("doudizhu"));
     }
+
+    @Test
+    public void test_auto_proxy(){
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        Fruit iFruit = applicationContext.getBean("iFruit", Fruit.class);
+        System.out.println("测试结果：" + iFruit.register("doudizhu"));
+    }
 }

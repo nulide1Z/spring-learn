@@ -11,7 +11,7 @@ import cn.wyw.springframework.beans.BeansException;
 public interface BeanPostProcessor {
 
     /**
-     * 在bean 实例化之前对bean 进行操作
+     * 在bean 初始化之前对bean 进行操作
      *
      * @param bean bean
      * @param beanName bean名称
@@ -23,7 +23,7 @@ public interface BeanPostProcessor {
     Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException;
 
     /**
-     * 在bean 实例化之后对bean 进行操作
+     * 在bean 初始化之后对bean 进行操作
      *
      * @param bean bean
      * @param beanName bean名称

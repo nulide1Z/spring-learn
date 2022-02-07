@@ -32,39 +32,22 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
     }
 
     @Override
-    public Object postProcessorBeforeInstantiation(Class<?> beanClass, String beanName) {
-        if (this.isInfrastructureClass(beanClass)) {
-            return null;
-        }
-        Collection<AspectJExpressionPointcutAdvisor> advisors = beanFactory.getBeansOfType(AspectJExpressionPointcutAdvisor.class).values();
-        for (AspectJExpressionPointcutAdvisor advisor : advisors) {
-            ClassFilter classFilter = advisor.getPointcut().getClassFilter();
-            if (!classFilter.matches(beanClass)) {
-                continue;
-            }
-
-            AdvisedSupport advisedSupport = new AdvisedSupport();
-
-            TargetSource targetSource = null;
-            try {
-                targetSource = new TargetSource(beanClass.getDeclaredConstructor().newInstance());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            advisedSupport.setMethodInterceptor((MethodInterceptor) advisor.getAdvice());
-            advisedSupport.setTargetSource(targetSource);
-            advisedSupport.setMethodMatcher(advisor.getPointcut().getMethodMatcher());
-
-            return new ProxyFactory(advisedSupport).getProxy();
-        }
+    public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) {
         return null;
+    }
+
+
+
+    @Override
+    public boolean postProcessAfterInstantiation(Object bean, String beanName) {
+        return true;
     }
 
     /**
      * 是否基础类
      *
      * @param beanClass bean 类型
-     * @return
+     * @return 是否基础类
      */
     private boolean isInfrastructureClass(Class<?> beanClass) {
         return (Advice.class.isAssignableFrom(beanClass) || Pointcut.class.isAssignableFrom(beanClass) || Advisor.class.isAssignableFrom(beanClass));
@@ -75,13 +58,35 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
         return bean;
     }
 
+    /**
+     * 初始化bean 之后
+     */
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        if (this.isInfrastructureClass(bean.getClass())){
+            return bean;
+        }
+        Collection<AspectJExpressionPointcutAdvisor> advisors = beanFactory.getBeansOfType(AspectJExpressionPointcutAdvisor.class).values();
+        for (AspectJExpressionPointcutAdvisor advisor : advisors) {
+            ClassFilter classFilter = advisor.getPointcut().getClassFilter();
+            if (!classFilter.matches(bean.getClass())){
+                continue;
+            }
+            TargetSource targetSource = new TargetSource(bean);
+            AdvisedSupport advisedSupport = new AdvisedSupport();
+            advisedSupport.setTargetSource(targetSource);
+            advisedSupport.setMethodInterceptor((MethodInterceptor) advisor.getAdvice());
+            advisedSupport.setMethodMatcher(advisor.getPointcut().getMethodMatcher());
+            advisedSupport.setProxyTarget(false);
+            return new ProxyFactory(advisedSupport).getProxy();
+        }
         return bean;
     }
 
+
+
     @Override
-    public PropertyValues postProcessPropertyValue(PropertyValues pv, Object bean, String beanName) {
+    public PropertyValues postProcessPropertyValues(PropertyValues pv, Object bean, String beanName) {
         return pv;
     }
 }

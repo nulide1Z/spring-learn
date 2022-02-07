@@ -26,6 +26,15 @@ public class AutowiredAnnotationBeanPostProcessor implements InstantiationAwareB
     public AutowiredAnnotationBeanPostProcessor() {
     }
 
+    public AutowiredAnnotationBeanPostProcessor(ConfigurableListableBeanFactory beanFactory) {
+        this.beanFactory = beanFactory;
+    }
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = (ConfigurableListableBeanFactory) beanFactory;
+    }
+
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         return bean;
@@ -37,12 +46,17 @@ public class AutowiredAnnotationBeanPostProcessor implements InstantiationAwareB
     }
 
     @Override
-    public Object postProcessorBeforeInstantiation(Class<?> beanClass, String beanName) {
+    public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) {
         return null;
     }
 
     @Override
-    public PropertyValues postProcessPropertyValue(PropertyValues pvs, Object bean, String beanName) {
+    public boolean postProcessAfterInstantiation(Object bean, String beanName) {
+        return true;
+    }
+
+    @Override
+    public PropertyValues postProcessPropertyValues(PropertyValues pvs, Object bean, String beanName) {
         Class<?> clazz = bean.getClass();
         clazz = ClassUtil.isCglibProxyClass(clazz) ? clazz.getSuperclass() : clazz;
         Field[] declaredFields = clazz.getDeclaredFields();
@@ -76,12 +90,7 @@ public class AutowiredAnnotationBeanPostProcessor implements InstantiationAwareB
         return pvs;
     }
 
-    public AutowiredAnnotationBeanPostProcessor(ConfigurableListableBeanFactory beanFactory) {
-        this.beanFactory = beanFactory;
-    }
 
-    @Override
-    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-        this.beanFactory = (ConfigurableListableBeanFactory) beanFactory;
-    }
+
+
 }

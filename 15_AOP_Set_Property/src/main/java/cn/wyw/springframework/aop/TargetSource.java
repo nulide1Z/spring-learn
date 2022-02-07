@@ -1,5 +1,7 @@
 package cn.wyw.springframework.aop;
 
+import cn.wyw.springframework.util.ClassUtil;
+
 /**
  * 目标源
  * @author 1z
@@ -13,8 +15,14 @@ public class TargetSource {
         return target;
     }
 
+    /**
+     * 判断是否由cglib 生成
+     * @return  此类的接口
+     */
     public Class<?>[] getTargetClass(){
-        return target.getClass().getInterfaces();
+        Class<?> clazz = this.target.getClass();
+        clazz = ClassUtil.isCglibProxyClass(clazz) ? clazz.getSuperclass() : clazz;
+        return clazz.getInterfaces();
     }
 
 

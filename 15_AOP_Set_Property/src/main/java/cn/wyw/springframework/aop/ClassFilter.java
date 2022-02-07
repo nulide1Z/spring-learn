@@ -8,5 +8,10 @@ package cn.wyw.springframework.aop;
  */
 public interface ClassFilter {
 
+    /**
+     * 匹配类
+     * @param clazz 类
+     * @return 是否匹配
+     */
     Boolean matches(Class<?> clazz);
 }
