@@ -1,5 +1,7 @@
 package cn.wyw.springframework.beans.factory.config;
 
+import cn.wyw.springframework.beans.BeansException;
+
 /**
  * 单例bean 注册接口定义
  *
@@ -17,5 +19,13 @@ public interface SingletonBeanRegister {
      * @date 2021/9/29 - 14:32
      **/
     Object getSingleton(String beanName);
+
+    /**
+     * 注册单例
+     * @param beanName bean 名称
+     * @param singletonObject 单例对象
+     * @throws BeansException  bean异常
+     */
+    void registerSingleton(String beanName, Object singletonObject) throws BeansException;
 
 }

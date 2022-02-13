@@ -72,8 +72,6 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     @Override
     public <T> T getBean(Class<T> requiredType) {
         List<String> beanNameList=  new ArrayList<>(beanDefinitionMap.size());
-
-        Collection<BeanDefinition> values = beanDefinitionMap.values();
         for (Map.Entry<String, BeanDefinition> beanDefinitionEntry : beanDefinitionMap.entrySet()) {
             Class clazz = beanDefinitionEntry.getValue().getBeanClass();
             if (requiredType.isAssignableFrom(clazz)){

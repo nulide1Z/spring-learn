@@ -17,11 +17,11 @@ public class PropertyValues {
         list.add(propertyValue);
     }
 
-    public PropertyValue[] getPropertyValue (){
+    public PropertyValue[] getPropertyValues(){
         return this.list.toArray(new PropertyValue[0]);
     }
 
-    public PropertyValue getPropertyValue(String name){
+    public PropertyValue getPropertyValues(String name){
         for (PropertyValue propertyValue : list) {
             if (propertyValue.getName().equals(name)){
                 return propertyValue;

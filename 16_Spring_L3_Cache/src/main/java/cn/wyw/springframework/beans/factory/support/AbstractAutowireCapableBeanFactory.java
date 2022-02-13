@@ -36,15 +36,25 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         if (beanDefinition == null) {
             throw new BeansException("had not yet register bean: " + beanName + " !");
         }
-        Object bean;
+        //判断是否为代理的bean 对象
+        Object bean = this.resolveBeforeInstantiation(beanName, beanDefinition);
+        if (null != bean) {
+            return bean;
+        }
+        return doCreateBean(beanName, beanDefinition, args);
+    }
+
+    protected Object doCreateBean(String beanName, BeanDefinition beanDefinition, Object[] args) {
+        Object bean = null;
         try {
-            //判断是否为代理的bean 对象
-            bean = this.resolveBeforeInstantiation(beanName, beanDefinition);
-            if (null != bean) {
-                return bean;
-            }
             // 创建实例
             bean = createBeanInstance(beanName, beanDefinition, args);
+
+            // 处理循环依赖
+            if (beanDefinition.isSingleton()) {
+                Object finalBean = bean;
+                addSingletonFactory(beanName, () -> getEarlyBeanReference(beanName, beanDefinition, finalBean));
+            }
 
             // 实例化判断
             boolean continueWithPropertyPopulation = this.applyBeanPostProcessorsAfterInstantiation(beanName, bean);
@@ -65,16 +75,41 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         // 注册实现了 DisposableBean 接口的 Bean 对象
         registerDisposableBeanIfNecessary(beanName, bean, beanDefinition);
 
+        // 判断 SCOPE_SINGLETON、SCOPE_PROTOTYPE
+        Object exposedObject = bean;
         if (beanDefinition.isSingleton()) {
-            addSingleton(beanName, bean);
+            exposedObject = getSingleton(beanName);
+            registerSingleton(beanName, exposedObject);
         }
         return bean;
     }
 
     /**
+     * 获取二级缓存钟的bean 引用
+     *
+     * @param beanName       bean 名称
+     * @param beanDefinition bean定义
+     * @param bean           bean
+     * @return
+     */
+    private Object getEarlyBeanReference(String beanName, BeanDefinition beanDefinition, Object bean) {
+        Object exposedObject = bean;
+        for (BeanPostProcessor beanPostProcessor : getBeanPostProcessors()) {
+            if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor) {
+                exposedObject = ((InstantiationAwareBeanPostProcessor) beanPostProcessor).getEarlyBeanReference(bean, beanName);
+                if (null == exposedObject) {
+                    return exposedObject;
+                }
+            }
+        }
+        return exposedObject;
+    }
+
+    /**
      * Bean 实例化后对于返回 false 的对象，不在执行后续设置 Bean 对象属性的操作
+     *
      * @param beanName bean 名称
-     * @param bean bean
+     * @param bean     bean
      * @return 是否
      */
     private boolean applyBeanPostProcessorsAfterInstantiation(String beanName, Object bean) {
@@ -104,7 +139,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             if (beanPostProcessor instanceof InstantiationAwareBeanPostProcessor) {
                 PropertyValues pvs = ((InstantiationAwareBeanPostProcessor) beanPostProcessor).postProcessPropertyValues(beanDefinition.getPropertyValues(), bean, beanName);
                 if (null != pvs) {
-                    for (PropertyValue pv : pvs.getPropertyValue()) {
+                    for (PropertyValue pv : pvs.getPropertyValues()) {
                         beanDefinition.getPropertyValues().addPropertyValue(pv);
                     }
                 }
@@ -237,10 +272,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     }
 
     public void applyPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
-
         try {
             PropertyValues propertyValues = beanDefinition.getPropertyValues();
-            for (PropertyValue propertyValue : propertyValues.getPropertyValue()) {
+            for (PropertyValue propertyValue : propertyValues.getPropertyValues()) {
                 String name = propertyValue.getName();
                 Object value = propertyValue.getValue();
                 if (value instanceof BeanReference) {

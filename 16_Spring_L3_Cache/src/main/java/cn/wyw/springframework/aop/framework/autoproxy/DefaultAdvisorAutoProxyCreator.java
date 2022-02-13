@@ -13,8 +13,7 @@ import org.aopalliance.aop.Advice;
 import org.aopalliance.intercept.MethodInterceptor;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 默认顾问自动代理创建者
@@ -25,6 +24,8 @@ import java.util.Map;
 public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPostProcessor, BeanFactoryAware {
 
     private DefaultListableBeanFactory beanFactory;
+
+    private final Set<Object> earlyProxyReferences = Collections.synchronizedSet(new HashSet<Object>());
 
     @Override
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
@@ -63,6 +64,26 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
      */
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+       if (!earlyProxyReferences.contains(beanName)){
+            wrapIfNecessary(bean, beanName);
+        }
+        return bean;
+    }
+
+
+
+    @Override
+    public PropertyValues postProcessPropertyValues(PropertyValues pv, Object bean, String beanName) {
+        return pv;
+    }
+
+    @Override
+    public Object getEarlyBeanReference(Object bean, String beanName) {
+        earlyProxyReferences.add(beanName);
+        return wrapIfNecessary(bean, beanName);
+    }
+
+    public Object wrapIfNecessary(Object bean, String beanName){
         if (this.isInfrastructureClass(bean.getClass())){
             return bean;
         }
@@ -77,16 +98,9 @@ public class DefaultAdvisorAutoProxyCreator implements InstantiationAwareBeanPos
             advisedSupport.setTargetSource(targetSource);
             advisedSupport.setMethodInterceptor((MethodInterceptor) advisor.getAdvice());
             advisedSupport.setMethodMatcher(advisor.getPointcut().getMethodMatcher());
-            advisedSupport.setProxyTarget(false);
+            advisedSupport.setProxyTarget(true);
             return new ProxyFactory(advisedSupport).getProxy();
         }
         return bean;
-    }
-
-
-
-    @Override
-    public PropertyValues postProcessPropertyValues(PropertyValues pv, Object bean, String beanName) {
-        return pv;
     }
 }

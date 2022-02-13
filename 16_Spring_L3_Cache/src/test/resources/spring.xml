@@ -6,12 +6,20 @@
 	         http://www.springframework.org/schema/beans/spring-beans.xsd
 		 http://www.springframework.org/schema/context">
 
-    <bean id="iFruit" class="cn.wyw.springframework.beans.aop.IFruit">
-        <property name="token" value="sssss"/>
+    <bean id="apple" class="cn.wyw.springframework.beans.aop.Apple">
+        <property name="pear"  ref="pear"/>
     </bean>
+    <bean id="pear"  class="cn.wyw.springframework.beans.aop.Pear">
+        <property name="apple"  ref="apple"/>
+        <property name="fruit"  ref="fruit"/>
+    </bean>
+
+    <bean id="fruit" class="cn.wyw.springframework.beans.aop.FruitFactory"/>
+
+
     <bean id="defaultAdvisorAutoProxyCreator" class="cn.wyw.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
 
-    <bean id="beforeAdvice" class="cn.wyw.springframework.beans.aop.IFruitMethodBeforeAdvice"/>
+    <bean id="beforeAdvice" class="cn.wyw.springframework.beans.aop.FruitAdvice"/>
     <bean id="methodBeforeAdviseInterceptor" class="cn.wyw.springframework.aop.framework.adapter.MethodBeforeAdviseInterceptor">
         <property name="advice" ref="beforeAdvice"/>
     </bean>
